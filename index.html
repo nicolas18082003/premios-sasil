@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premios Sasil 2026</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+      background-image: url("./imagenes/fondo.png");
+      background-size: cover;
+    }
+
+    .fondo {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .contenedor {
+      position: relative;
+      width: 932px;
+      height: 535px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    #icono-central {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 250px;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.5s ease;
+      z-index: 2;
+    }
+
+    .btn-categoria, .btn-icono {
+      position: absolute;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .btn-categoria img, .btn-icono img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* -------- MODAL --------- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-contenido {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: 10% auto;
+      border-radius: 10px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .modal button {
+      padding: 10px 15px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contenedor">
+    <img id="icono-central" src="imagenes/Recurso 11.png" alt="Icono central">
+
+    <!-- BOTONES DE CATEGORÍAS (ESPEJO) -->
+    <button class="btn-categoria" style="left: 75px; top: 110px; width: 100px; height: 40px;" data-categoria="poesia">
+      <img src="imagenes/poesia .png" alt="Botón Poesía">
+    </button>
+    <button class="btn-categoria" style="left: 160px; top: 80px; width: 100px; height: 40px;" data-categoria="musica">
+      <img src="imagenes/musica.png" alt="Botón Música">
+    </button>
+    <button class="btn-categoria" style="left: 65px; top: 210px; width: 100px; height: 40px;" data-categoria="prosa">
+      <img src="imagenes/prosa.png" alt="Botón Prosa">
+    </button>
+    <button class="btn-categoria" style="left: 170px; top: 180px; width: 100px; height: 40px;" data-categoria="danza">
+      <img src="imagenes/danza.png" alt="Botón Danza">
+    </button>
+    <button class="btn-categoria" style="left: 155px; top: 280px; width: 100px; height: 40px;" data-categoria="teatro">
+      <img src="imagenes/teatro.png" alt="Botón Teatro">
+    </button>
+
+    <button class="btn-categoria" style="left: 680px; top: 80px; width: 100px; height: 40px;" data-categoria="popular">
+      <img src="imagenes/popular.png" alt="Botón Popular">
+    </button>
+    <button class="btn-categoria" style="left: 810px; top: 130px; width: 100px; height: 40px;" data-categoria="pintura">
+      <img src="imagenes/pintura.png" alt="Botón Pintura">
+    </button>
+    <button class="btn-categoria" style="left: 660px; top: 200px; width: 100px; height: 40px;" data-categoria="escultura">
+      <img src="imagenes/escultura.png" alt="Botón Escultura">
+    </button>
+    <button class="btn-categoria" style="left: 780px; top: 280px; width: 100px; height: 40px;" data-categoria="fotografia">
+      <img src="imagenes/fotografia.png" alt="Botón Fotografía">
+    </button>
+    <button class="btn-categoria" style="left: 660px; top: 330px; width: 100px; height: 40px;" data-categoria="trayectoria">
+      <img src="imagenes/trayectoria.png" alt="Botón Trayectoria">
+    </button>
+
+    <!-- BOTONES PDF Y DRIVE -->
+    <button class="btn-icono" style="left: 440px; top: 460px; width: 32px; height: 32px;" id="btn-pdf">
+      <img src="imagenes/botton pdf.png" alt="Descargar">
+    </button>
+    <button class="btn-icono" style="left: 480px; top: 460px; width: 32px; height: 32px;" id="btn-drive">
+      <img src="imagenes/drive.png" alt="Drive">
+    </button>
+
+    <!-- BOTÓN SUPERIOR (VACÍO) -->
+    <button class="btn-categoria" style="left: 790px; top: 20px; width: 120px; height: 30px;"></button>
+  </div>
+
+  <!-- MODAL PARA FORMULARIO DE DRIVE -->
+  <div class="modal" id="modalDrive">
+    <div class="modal-contenido">
+      <h3>Enviar a Drive</h3>
+      <input type="text" placeholder="Nombre completo">
+      <input type="tel" placeholder="Teléfono">
+      <input type="email" placeholder="Correo electrónico">
+      <input type="url" placeholder="Link de Drive">
+      <div style="text-align: right;">
+        <button onclick="cerrarModal()">Cancelar</button>
+        <button onclick="cerrarModal()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let categoriaSeleccionada = null;
+
+    document.querySelectorAll('.btn-categoria').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const categoria = btn.getAttribute('data-categoria');
+        if (categoria) {
+          document.getElementById('icono-central').style.opacity = 0;
+          setTimeout(() => {
+            document.getElementById('icono-central').src = `img/${categoria}.png`;
+            document.getElementById('icono-central').style.opacity = 1;
+            categoriaSeleccionada = categoria;
+          }, 300);
+        }
+      });
+    });
+
+    document.getElementById('btn-pdf').addEventListener('click', () => {
+      if (categoriaSeleccionada) {
+        window.open(`pdf/${categoriaSeleccionada}.pdf`, '_blank');
+      } else {
+        alert('Primero selecciona una categoría.');
+      }
+    });
+
+    document.getElementById('btn-drive').addEventListener('click', () => {
+      if (categoriaSeleccionada) {
+        document.getElementById('modalDrive').style.display = 'block';
+      } else {
+        alert('Primero selecciona una categoría.');
+      }
+    });
+
+    function cerrarModal() {
+      document.getElementById('modalDrive').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
