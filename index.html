@@ -80,6 +80,17 @@
     .modal button {
       padding: 10px 15px;
       margin-right: 10px;
+      background-color: #155268;
+      color: aliceblue;
+      border: 0px;
+    }
+
+    .btn-enviar {
+      padding: 10px 15px;
+      margin-right: 10px;
+      background-color: #155268;
+      color: aliceblue;
+      border: 0px;
     }
   </style>
 </head>
@@ -134,15 +145,15 @@
 
   <!-- MODAL PARA FORMULARIO DE DRIVE -->
   <div class="modal" id="modalDrive">
-    <div class="modal-contenido">
-      <h3>Enviar a Drive</h3>
+    <div class="modal-contenido" style="background-color: #dfe8d9bb; ">
+      <h3 style="color: #155268;">Enviar a Drive</h3>
       <input type="text" placeholder="Nombre completo">
       <input type="tel" placeholder="Teléfono">
       <input type="email" placeholder="Correo electrónico">
       <input type="url" placeholder="Link de Drive">
       <div style="text-align: right;">
         <button onclick="cerrarModal()">Cancelar</button>
-        <button onclick="cerrarModal()">Enviar</button>
+        <button onclick="cerrarModal()" class="btn-enviar">Enviar</button>
       </div>
     </div>
   </div>
