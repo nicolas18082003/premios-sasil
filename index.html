@@ -4,33 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Premios Sasil 2026</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
       font-family: sans-serif;
-      background-image: url("imagenes/fondo\ .png");
+      background-image: url("imagenes/fondo .png");
       background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .contenedor {
       position: relative;
-      width: 932px;
-      height: 535px;
-      margin: auto;
-      top: 50%;
-      transform: translateY(-50%);
+      width: 100%;
+      max-width: 932px;
+      aspect-ratio: 932 / 535;
+      margin: 0 auto;
     }
 
     #icono-central {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 350px;
       transform: translate(-50%, -50%);
+      max-width: 30vw;
+      width: 100%;
       transition: opacity 0.5s ease;
       z-index: 2;
     }
@@ -50,7 +52,6 @@
       pointer-events: none;
     }
 
-    /* -------- MODAL --------- */
     .modal {
       display: none;
       position: fixed;
@@ -82,118 +83,126 @@
       margin-right: 10px;
       background-color: #155268;
       color: aliceblue;
-      border: 0px;
+      border: 0;
     }
 
     .btn-enviar {
-      padding: 10px 15px;
-      margin-right: 10px;
       background-color: #155268;
-      color: aliceblue;
-      border: 0px;
+    }
+
+    @media (max-width: 768px) {
+      #icono-central {
+        max-width: 60vw;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="contenedor">
-    <img id="icono-central" src="imagenes/Recurso 11.png" alt="Icono central">
+<!-- Botón gráfico fijo en esquina superior derecha -->
+<button class="btn-icono" style="position: fixed; top: 1vh; right: 5vw; width: 40px; height: 40px; z-index: 5;" onclick="window.open('tutorial_drive.pdf', '_blank')">
+  <img src="imagenes/bottonvideo.png" alt="Tutorial" style="width: 200%; height: 100%;">
+</button>
 
-    <!-- BOTONES DE CATEGORÍAS -->
-    <button class="btn-categoria" style="left: 75px; top: 110px; width: 200px; height: 80px;" data-categoria="poesia">
-      <img src="imagenes/b poesia.png" alt="Botón Poesía">
-    </button>
-    <button class="btn-categoria" style="left: 160px; top: 80px; width: 200px; height: 80px;" data-categoria="musica">
-      <img src="imagenes/b musica.png" alt="Botón Música">
-    </button>
-    <button class="btn-categoria" style="left: 65px; top: 210px; width: 200px; height: 80px;" data-categoria="prosa">
-      <img src="imagenes/b prosa.png" alt="Botón Prosa">
-    </button>
-    <button class="btn-categoria" style="left: 130px; top: 150px; width: 160px; height: 80;" data-categoria="danza">
-      <img src="imagenes/b danza.png" alt="Botón Danza">
-    </button>
-    <button class="btn-categoria" style="left: 155px; top: 280px; width: 200; height: 80px;" data-categoria="teatro">
-      <img src="imagenes/b teatro.png" alt="Botón Teatro">
-    </button>
-    <button class="btn-categoria" style="left: 680px; top: 80px; width: 200px; height: 80px;" data-categoria="arte-popular">
-      <img src="imagenes/b popular.png" alt="Botón Popular">
-    </button>
-    <button class="btn-categoria" style="left: 810px; top: 130px; width: 200px; height: 80px;" data-categoria="pintura">
-      <img src="imagenes/b pintura_1.png" alt="Botón Pintura">
-    </button>
-    <button class="btn-categoria" style="left: 660px; top: 200px; width: 200px; height: 80px;" data-categoria="escultura">
-      <img src="imagenes/b escultura.png" alt="Botón Escultura">
-    </button>
-    <button class="btn-categoria" style="left: 780px; top: 280px; width: 200px; height: 80px;" data-categoria="fotografia">
-      <img src="imagenes/b foto.png" alt="Botón Fotografía">
-    </button>
-    <button class="btn-categoria" style="left: 660px; top: 330px; width: 200px; height: 80px;" data-categoria="trayectoria-artistica">
-      <img src="imagenes/b trayectoria.png" alt="Botón Trayectoria">
-    </button>
+<div class="contenedor">
 
-    <!-- BOTONES PDF Y DRIVE -->
-    <button class="btn-icono" style="left: 440px; top: 460px; width: 50px; height: 50px;" id="btn-pdf">
-      <img src="imagenes/botton pdf.png" alt="Descargar">
-    </button>
-    <button class="btn-icono" style="left: 480px; top: 460px; width: 50px; height: 50px;" id="btn-drive">
-      <img src="imagenes/drive.png" alt="Drive">
-    </button>
+  <img id="icono-central" src="imagenes/Recurso 11.png" alt="Icono central">
 
-    <!-- BOTÓN SUPERIOR (VACÍO) -->
-    <button class="btn-categoria" style="left: 790px; top: 20px; width: 120px; height: 30px;"></button>
-  </div>
+  <!-- BOTONES DE CATEGORÍA (valores escalables) -->
+  <button class="btn-categoria" style="left: 8%; top: 20%; width: 20%; height: 15%;" data-categoria="poesia">
+    <img src="imagenes/b poesia.png" alt="Botón Poesía">
+  </button>
+  <button class="btn-categoria" style="left: 18%; top: 15%; width: 20%; height: 15%;" data-categoria="musica">
+    <img src="imagenes/b musica.png" alt="Botón Música">
+  </button>
+  <button class="btn-categoria" style="left: 7%; top: 40%; width: 20%; height: 15%;" data-categoria="prosa">
+    <img src="imagenes/b prosa.png" alt="Botón Prosa">
+  </button>
+  <button class="btn-categoria" style="left: 15%; top: 30%; width: 18%; height: 15%;" data-categoria="danza">
+    <img src="imagenes/b danza.png" alt="Botón Danza">
+  </button>
+  <button class="btn-categoria" style="left: 17%; top: 55%; width: 20%; height: 15%;" data-categoria="teatro">
+    <img src="imagenes/b teatro.png" alt="Botón Teatro">
+  </button>
 
-  <!-- MODAL PARA FORMULARIO DE DRIVE -->
-  <div class="modal" id="modalDrive">
-    <div class="modal-contenido" style="background-color: #dfe8d9bb; ">
-      <h3 style="color: #155268;">Subir Drive</h3>
-      <input type="text" placeholder="Nombre completo">
-      <input type="tel" placeholder="Teléfono">
-      <input type="email" placeholder="Correo electrónico">
-      <input type="url" placeholder="Link de Drive">
-      <div style="text-align: right;">
-        <button onclick="cerrarModal()">Cancelar</button>
-        <button onclick="cerrarModal()" class="btn-enviar">Enviar</button>
-      </div>
+  <button class="btn-categoria" style="left: 73%; top: 15%; width: 20%; height: 15%;" data-categoria="arte-popular">
+    <img src="imagenes/b popular.png" alt="Botón Popular">
+  </button>
+  <button class="btn-categoria" style="left: 85%; top: 25%; width: 20%; height: 15%;" data-categoria="pintura">
+    <img src="imagenes/b pintura_1.png" alt="Botón Pintura">
+  </button>
+  <button class="btn-categoria" style="left: 70%; top: 37%; width: 20%; height: 15%;" data-categoria="escultura">
+    <img src="imagenes/b escultura.png" alt="Botón Escultura">
+  </button>
+  <button class="btn-categoria" style="left: 82%; top: 55%; width: 20%; height: 15%;" data-categoria="fotografia">
+    <img src="imagenes/b foto.png" alt="Botón Fotografía">
+  </button>
+  <button class="btn-categoria" style="left: 70%; top: 65%; width: 20%; height: 15%;" data-categoria="trayectoria-artistica">
+    <img src="imagenes/b trayectoria.png" alt="Botón Trayectoria">
+  </button>
+
+  <!-- Botones PDF y Drive -->
+  <button class="btn-icono" style="left: 47%; bottom: 5%; width: 6%; height: 10%;" id="btn-pdf">
+    <img src="imagenes/botton pdf.png" alt="Descargar">
+  </button>
+  <button class="btn-icono" style="left: 52%; bottom: 5%; width: 6%; height: 10%;" id="btn-drive">
+    <img src="imagenes/drive.png" alt="Drive">
+  </button>
+
+</div>
+
+<!-- MODAL PARA FORMULARIO DE DRIVE -->
+<div class="modal" id="modalDrive">
+  <div class="modal-contenido" style="background-color: #dfe8d9bb;">
+    <h3 style="color: #155268;">Subir Drive</h3>
+    <input type="text" placeholder="Nombre completo">
+    <input type="tel" placeholder="Teléfono">
+    <input type="email" placeholder="Correo electrónico">
+    <input type="url" placeholder="Link de Drive">
+    <div style="text-align: right;">
+      <button onclick="cerrarModal()">Cancelar</button>
+      <button onclick="cerrarModal()" class="btn-enviar">Enviar</button>
     </div>
   </div>
+</div>
 
-  <script>
-    let categoriaSeleccionada = null;
+<script>
+  let categoriaSeleccionada = null;
 
-    document.querySelectorAll('.btn-categoria').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const categoria = btn.getAttribute('data-categoria');
-        if (categoria) {
-          document.getElementById('icono-central').style.opacity = 0;
-          setTimeout(() => {
-            document.getElementById('icono-central').src = `img/${categoria}.png`;
-            document.getElementById('icono-central').style.opacity = 1;
-            categoriaSeleccionada = categoria;
-          }, 300);
-        }
-      });
-    });
-
-    document.getElementById('btn-pdf').addEventListener('click', () => {
-      if (categoriaSeleccionada) {
-        window.open(`pdf/${categoriaSeleccionada}.pdf`, '_blank');
-      } else {
-        alert('Primero selecciona una categoría.');
+  document.querySelectorAll('.btn-categoria').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const categoria = btn.getAttribute('data-categoria');
+      if (categoria) {
+        document.getElementById('icono-central').style.opacity = 0;
+        setTimeout(() => {
+          document.getElementById('icono-central').src = img/${categoria}.png;
+          document.getElementById('icono-central').style.opacity = 1;
+          categoriaSeleccionada = categoria;
+        }, 300);
       }
     });
+  });
 
-    document.getElementById('btn-drive').addEventListener('click', () => {
-      if (categoriaSeleccionada) {
-        document.getElementById('modalDrive').style.display = 'block';
-      } else {
-        alert('Primero selecciona una categoría.');
-      }
-    });
-
-    function cerrarModal() {
-      document.getElementById('modalDrive').style.display = 'none';
+  document.getElementById('btn-pdf').addEventListener('click', () => {
+    if (categoriaSeleccionada) {
+      window.open(pdf/${categoriaSeleccionada}.pdf, '_blank');
+    } else {
+      alert('Primero selecciona una categoría.');
     }
-  </script>
+  });
+
+  document.getElementById('btn-drive').addEventListener('click', () => {
+    if (categoriaSeleccionada) {
+      document.getElementById('modalDrive').style.display = 'block';
+    } else {
+      alert('Primero selecciona una categoría.');
+    }
+  });
+
+  function cerrarModal() {
+    document.getElementById('modalDrive').style.display = 'none';
+  }
+</script>
+
 </body>
 </html>
